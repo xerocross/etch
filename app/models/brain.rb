@@ -34,19 +34,18 @@ class Brain < ApplicationRecord
   end
   
   def learn(arguments, expected_value)
-    new_constants = []
     learning_constants_array = JSON.parse(self.learning_constants)
-    
-    # The following two loops of updates are the
+    # The following loop computation is the
     # heart of the gradient descent algorithm as
     # applied here.  We must not attempt to mutate
     # self.learning_constants directly inside this
-    # loop
+    # loop.  It will be updated after we have
+    # computed all of the updates here.
     learning_constants_array.length.times do |i|
       learning_constants_array[i] = learning_constants_array[i] - @@ALPHA*(hypothesis(arguments) - expected_value)*arguments[i]
     end
+    # Now we perform the update.
     self.learning_constants = learning_constants_array.to_json
-    #save
   end
   
   private
