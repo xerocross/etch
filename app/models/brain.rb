@@ -1,12 +1,13 @@
 class Brain < ApplicationRecord
   belongs_to :user
   @@ALPHA = 0.05
+  @@INITIAL_LEARNING_CONSTANTS = [-0.11850, 0.24085, -1.18921, 1.0149, 1]
   after_create :init_learning_constants
   
   def hypothesis(x)
-    u = JSON.parse(learning_constants)
+    u = JSON.parse(self.learning_constants)
     matrix_product = 0
-    5.times do |i|
+    u.length.times do |i|
       matrix_product += u[i]*x[i]
     end
     1/(1+Math.exp(-matrix_product))
@@ -34,25 +35,24 @@ class Brain < ApplicationRecord
   
   def learn(arguments, expected_value)
     new_constants = []
-    learning_constants_array = JSON.parse(learning_constants)
-    5.times do |i|
-      new_constants[i] = learning_constants_array[i]
+    learning_constants_array = JSON.parse(self.learning_constants)
+    
+    # The following two loops of updates are the
+    # heart of the gradient descent algorithm as
+    # applied here.  We must not attempt to mutate
+    # self.learning_constants directly inside this
+    # loop
+    learning_constants_array.length.times do |i|
+      learning_constants_array[i] = learning_constants_array[i] - @@ALPHA*(hypothesis(arguments) - expected_value)*arguments[i]
     end
-    5.times do |i|
-      new_constants[i] = learning_constants_array[i] - @@ALPHA*(hypothesis(arguments) - expected_value)*arguments[i]
-    end
-    5.times do |i|
-      learning_constants_array[i] = new_constants[i]
-    end
-    write_attribute(:learning_constants, learning_constants_array.to_json)
-    save
+    self.learning_constants = learning_constants_array.to_json
+    #save
   end
   
   private
   
   def init_learning_constants
-    self.learning_constants = "[-0.11850,0.24085,-1.18921,1.0149,1]";
-    self.save!
-    #self.learning_constants = '[0.99726894142137,-1.0206552928931498, -1.16727646446575, 0.9493447071068499]'
+    self.learning_constants = @@INITIAL_LEARNING_CONSTANTS.to_s
+    #self.save!
   end
 end
