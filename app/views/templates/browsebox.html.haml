@@ -1,0 +1,26 @@
+.row{class:'tapglass-row','ng-cloak'=>true}
+  .left.col-sm-2.hidden-xs{'ng-click'=>'left()'}
+    = image_tag image_path("chevron_left_black.png"), height:'70px'
+  .tapglass.col-sm-8.empty{'ng-show'=>'loading','ng-cloak'=>true}
+    %loading-spinner
+  .tapglass.col-sm-8.empty{'ng-show'=>'!loading && empty','ng-cloak'=>true}
+    %p{style:'text-align:center'}
+      no cards in this view
+    %div{style:'text-align:center; font-size:400%'}
+      %span{class:'glyphicon glyphicon-ok'}
+  .tapglass.col-sm-8#tapglass-present{'ng-show'=>'!loading && !empty'}
+    %div.text-left
+      %span card {{index + 1}} of {{array.length}}: card# {{array[index].id}}
+    %div
+      %div{'ng-transclude'=>'card'}
+  .right.col-sm-2.hidden-xs{'ng-click'=>'right()'}
+    = image_tag image_path("chevron_right_black.png"), height:'70px'
+
+#review-buttons.text-center{class:'', 'ng-show'=>'!loading && !empty'}
+  %span
+    %button{class:'btn btn-lg btn-default hidden-sm hidden-md hidden-lg','ng-click'=>'left()','ng-disabled'=>'!leftExists()'}
+      %span{class:'glyphicon glyphicon-arrow-left'}
+  %span{'ng-transclude'=>'buttons'}
+  %span
+    %button{class:'btn btn-default btn-lg hidden-sm hidden-md hidden-lg','ng-click'=>'right()','ng-disabled'=>'!rightExists()'}
+      %span{class:'glyphicon glyphicon-arrow-right'}

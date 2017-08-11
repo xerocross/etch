@@ -1,0 +1,12 @@
+%script
+  ATTACHED_KEYWORDS = [];
+
+%div.pad.narrow{'ng-controller'=>'keywordSelector'}
+  %strong
+    Choose keywords.  Leave blank to view all cards.
+  = form_tag '/study/browse',method: :get do
+    %tags-input{"ng-model"=>"attachedKeywords", placeholder:"add a keyword","add-from-autocomplete-only"=>"true"}
+      %auto-complete{source: "loadItems($query)"}
+  %form{action:'/study/browse',method: 'GET'}
+    %input{name:'keywords', type: "hidden", value:'{{attachedkeywordIds | json}}'}
+    %input{class:"control-form btn btn-default",type:'submit',value:'Update'}

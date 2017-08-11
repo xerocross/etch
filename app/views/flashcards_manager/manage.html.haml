@@ -1,0 +1,44 @@
+%script
+  ATTACHED_KEYWORDS = [];
+
+%div{"ng-controller"=>"flashcardsManager"}
+
+  %div.pad{'ng-controller'=>'keywordSelector'}
+
+    %form
+    %div
+      %h3
+        Query
+      .well
+        %strong
+          Choose Keywords
+        %tags-input{"ng-model"=>"attachedKeywords", placeholder:"add a keyword","add-from-autocomplete-only"=>"true"}
+          %auto-complete{source: "loadItems($query)"}
+        %input{name:'keywords', type: "hidden", value:'{{attachedkeywordIds | json}}'}
+
+      %a{"ng-click"=>"export()", class:'btn btn-default'}
+        export all
+      %a{"ng-click"=>"export(true)",class:'btn btn-default'}
+        export selected
+  
+  %h3.pad.buffer{style:"margin-top:1em"}
+    Query Results
+  %div{"ng-show"=>"loading"}
+    %loading-spinner
+  %form
+    %table.table.table-striped.table-hover
+      %tr{"ng-show"=>"!loading","ng-cloak"=>true,"ng-repeat"=>"card in cards track by card.id"}
+        %td
+          .row
+            .col-xs-2
+              {{card.id}}<br>
+              %input{type:"checkbox",name:"cards",'ng-model'=>"card.selected"}
+            .col-xs-8{}
+              %flashcard-preview{"data-card"=>"card", "data-macro"=>"{{card.macro}}"}
+            .col-xs-1{style:"padding-right:1em"}
+              %a{"href"=>"/flashcards/{{card.id}}",style:"font-size:20pt"}
+                %span{class:"glyphicon glyphicon-chevron-right"}
+
+  .text-center
+    %a{"ng-click"=>"more()"}
+      more

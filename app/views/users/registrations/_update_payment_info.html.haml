@@ -1,0 +1,11 @@
+%script{src:"https://checkout.stripe.com/checkout.js"}
+%script
+  = "var EMAIL = '#{@user.email}';".html_safe
+%h3 Update Payment Info
+.pad.narrow
+  = form_for(@user, url: user_registration_path,method: :patch, html:{'name'=>'register','ng-controller'=> "paymentMethodForm",'ng-submit' => 'checkout($event)'}) do |f|
+    = f.label :current_password, 'Confirm Current Password'
+    = f.password_field :current_password, autocomplete: "off",class:'form-control',required: true, placeholder:'confirm password'
+    = hidden_field_tag :payment_token, nil, "value"=>"{{paymentToken}}"
+    .action
+      %input.btn.btn-default.btn-lg{type:'submit',value:'Click To Update Payment Info'}

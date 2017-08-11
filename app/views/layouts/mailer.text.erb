@@ -1,0 +1,9 @@
+Dear <%= !@user.first_name.nil? ? @user.first_name : 'Customer'  %>:<%= "\r\n" %>
+<%= yield %>
+<%= "\r\n" %>
+Sincerely,<%= "\r\n" %>
+<%= "\r\n" %>
+Adam Cross<%= "\r\n" %>
+adam@xeroetch.com<%= "\r\n" %>
+Creator and Chief Engineer,<%= "\r\n" %>
+XeroCross Etch<%= "\r\n" %>

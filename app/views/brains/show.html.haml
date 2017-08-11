@@ -1,0 +1,66 @@
+%script
+  var LEARNING_CONSTANTS = [];
+  - JSON.parse(@brain.learning_constants).each do |x|
+    = "LEARNING_CONSTANTS.push(#{x});".html_safe
+
+%div.narrow.pad{'ng-controller'=>"brain"}
+  %p.alert.alert-warning
+    %strong
+      Tip:
+    This page is an advanced feature most users don't need to worry about.
+    
+
+  %h3
+    Learning Constants
+  %p
+    Etch uses these learning constants to calculate when you need to review a flashcard.  The constants are user-specific&mdash;meaning different users may have different constants&mdash;and they change over time as Etch adapts to you.
+    
+  %p
+    In the Card Data, 'reps' is the number of review sessions recorded.  For a review session to be recorded, you have to click one of the updates for that card, like 'got it', or 'too soon' or 'too late'.  The 'gap' is the number of days since the most recent review session.
+    
+  %p.alert.alert-info
+    %strong
+      In the works: 
+    later, you will be able to play with these constants and help to train Etch more directly to your satisfaction.
+    
+    
+    
+    
+  %form.narrow-form
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Card Data
+          %th Learning Constant
+      %tbody
+        %tr
+          %td
+            1 &times;
+          %td
+            %input.form-control{type:'text','ng-model'=>'c[0]','ng-model-options'=>"{debounce: 1000}"}
+        %tr
+          %td
+            reps/5 &times;
+          %td
+            %input.form-control{type:'text','ng-model'=>'c[1]','ng-model-options'=>"{debounce: 1000}"}
+        %tr
+          %td
+            ="(reps/5)<sup>2</sup> &times;".html_safe
+          %td
+            %input.form-control{type:'text','ng-model'=>'c[2]','ng-model-options'=>"{debounce: 1000}"}      
+        %tr
+          %td
+            gap/40.0 &times;
+          %td
+            %input.form-control{type:'text','ng-model'=>'c[3]','ng-model-options'=>"{debounce: 1000}"}
+        %tr
+          %td
+            ="(gap/40.0)<sup>10</sup> &times;".html_safe
+          %td
+            %input.form-control{type:'text','ng-model'=>'c[4]','ng-model-options'=>"{debounce: 1000}"}
+    %h3
+      Cooling Periods Between Reviews
+    %p
+      The numbers below represent the predicted gaps in days between each review session.  Note, however, that these numbers are calculated dynamically from the learning constants, and they will change as Etch adapts to you.
+    %p
+      {{prog | json}}

@@ -1,0 +1,41 @@
+<script>
+      // document ready
+      $(function() {
+        // capture all enter and do nothing
+
+        // attach jquery plugin to validate address
+        $("[name=register]").find("#user_email").mailgun_validator({
+          api_key: 'pubkey-e84742e64ef23fd78d1bebe9c5fadced', // replace this with your Mailgun public API key
+          in_progress: validation_in_progress,
+          success: validation_success,
+          error: validation_error,
+        });
+      });
+  
+      // while the lookup is performing
+      function validation_in_progress() {
+        $('#email-status').html("<img src='loading.gif' height='16'/>");
+      }
+      // if email successfull validated
+      function validation_success(data) {
+        $('#email-status').html(get_suggestion_str(data['is_valid'], data['did_you_mean']));
+      }
+      // if email is invalid
+      function validation_error(error_message) {
+        $('#email-status').html("<div class=\"alert alert-danger\">" + error_message + "</div>");
+      }
+      // suggest a valid email
+      function get_suggestion_str(is_valid, alternate) {
+        if (is_valid) {
+          var result = "";
+          if (alternate) {
+            result = '<div class="alert alert-warning"> Did you mean <em>' + alternate + '</em>?)</div>';
+          }
+          return result
+        } else if (alternate) {
+          return '<div class="alert alert-warning">Did you mean <em>' +  alternate + '</em>?</div>';
+        } else {
+          return '<div class="alert alert-danger">Address is invalid.</div>';
+        }
+      }
+    </script>

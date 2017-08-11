@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>
+      Dear <%= !@user.first_name.nil? ? @user.first_name : 'Customer'  %>:
+    </p>
+    <%= yield %>
+    <p>
+      Sincerely,<br/>
+
+      Adam Cross<br/>
+      adam@xeroetch.com<br/>
+      Creator and Chief Engineer<br/>
+      XeroCross Etch
+    </p>
+  </body>
+</html>

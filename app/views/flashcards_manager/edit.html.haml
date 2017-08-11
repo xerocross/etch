@@ -1,0 +1,18 @@
+%script
+  = "var CARD_DATA = \"#{@flashcard.data}\";".html_safe
+  =raw("var CARD = #{render partial: 'flashcard.json', locals:{flashcard: @flashcard}};");
+
+.pad
+  -if @flashcard.errors.any?
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title
+          Errors
+      .panel-body
+        -@flashcard.errors.full_messages.each do |msg|
+          .text-danger
+            = msg
+
+  = render "flashcards_manager/macros/#{@macro}_form", flashcard: @flashcard 
+
+

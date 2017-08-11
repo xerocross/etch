@@ -1,0 +1,43 @@
+.pad.narrow
+  = form_for(resource, as: resource_name, url: registration_path(resource_name),html:{'name'=>'register','ng-controller'=> "newUser",class: 'narrow-form'}) do |f|
+    =devise_error_messages!
+    = hidden_field_tag :payment_token, nil, "value"=>"{{paymentToken}}"
+
+    .field.form-group
+      = f.label :first_name,class:'sr-only'
+      = f.text_field :first_name, autofocus: true,class: "form-control", placeholder: 'first name'
+
+    .field.form-group
+      = f.label :email,class:'sr-only'
+      = f.email_field :email, autofocus: true,class: "form-control",'data-proxy'=>true,'required'=>true,'ng-model'=> 'email',placeholder: 'email','type'=>'email'
+      %div{id:'email-status',style:'width:100%'}
+
+      %p.text-info
+        Valid email is the only way to reset your password if you lose it.
+      %p.alert.alert-danger{'ng-show'=>"register['user[email]'].$dirty && register['user[email]'].$error.required", 'ng-cloak'=>true}
+        Email is required.
+
+    .field.form-group
+      = f.label :password,class:'sr-only'
+      = f.password_field :password, autocomplete: "off",class: "form-control",'ng-model' => 'password','data-proxy'=>true,'required'=>true,'placeholder'=>'password'
+      %p.alert.alert-danger{'ng-show'=>"register['user[password]'].$dirty && register['user[password]'].$error.required"}
+        Password is required.
+    .field.form-group
+      = f.label :password_confirmation,class:'sr-only' 
+      = f.password_field :password_confirmation, autocomplete: "off",class: "form-control",'ng-model'=>'passwordConfirm','compare-to' => "password",'placeholder'=>'confirm password'
+
+      %p.alert.alert-danger{'ng-cloak'=>true, 'ng-show'=>"register['user[password_confirmation]'].$dirty && register['user[password_confirmation]'].$error.compareTo"}
+        Must match password field.
+
+
+    #keyField.field.form-group
+      %label.sr-only{for:'key'}
+        Encryption Key
+      %input.form-control{type:"text",name:"key", 'ng-model'=>"newKey", placeholder:"encryption key"}
+      %p.text-info
+        Encryption key will be stored on your computer.  It is not possible to recover the key if you lose it or forget it.  For best results, use a random string of 32 characters.  The key is _not_ sent to the server when you submit this form.
+
+    
+    %input.btn.btn-success.btn-lg{type:'submit',value:'Register'}
+      
+

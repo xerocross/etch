@@ -1,0 +1,10 @@
+=form_for keyword, :html => {class:'form-group', 'cal-crypt-form'=>'cal-crypt-form'} do |f|
+  -if keyword.errors.any?
+    = render partial: 'errors.html.haml'
+  .row
+    .col-xs-8.col-sm-8
+      =f.label :text,class:'sr-only'
+      =f.text_field :text, class:'form-control',placeholder:'keyword','cal-crypt-input'=>true
+    .col-xs-8.col-sm-4
+      .hidden-sm.hidden-md.hidden-lg{style: "height:20px"}
+      = f.submit :class =>'btn btn-default btn-block'

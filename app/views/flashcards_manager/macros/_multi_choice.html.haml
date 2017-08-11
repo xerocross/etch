@@ -1,0 +1,36 @@
+%h2 
+  %a{href: new_flashcard_url}
+    %span{class: 'glyphicon glyphicon-chevron-left'}
+  Multiple Choice Card
+%div.pad.narrow{'ng-controller'=>"multiChoiceMacro"}
+  = form_for @flashcard, :html=>{'cal-crypt-form'=>true,class:'form-group','ng-model-options'=>"{ allowInvalid: true, debounce: 200 }"} do |f|
+    =hidden_field_tag('flashcard[macro]', 'multi_choice')
+    %div{class:'form-inline'}
+      .input-group
+        %strong{class:'input-group-addon'}
+          Question:
+        = text_field_tag :question,nil, 'ng-model'=>'question',class:'form-control'
+      .input-group
+        %strong{class:'input-group-addon'}
+          Correct Answer:
+        = text_field_tag :answer,nil, 'ng-model'=>'answer',class:'form-control'
+      %div{'ng-repeat'=>'choice in cardData.distractors track by $index'}
+        .input-group
+          %strong{class:'input-group-addon'}
+            Wrong Choice:
+          = text_field_tag '',nil, 'ng-model'=>'distractors[$index]',class:'form-control'
+    %button.btn.btn-default{type:'button','ng-click'=>'addDistractor()'}
+      add distractor
+    %h3 Question Preview
+    .preview-div{class:"preview-div card-text noselect",'ng-bind-html'=>'front_side'}
+    %h3 Answer Preview
+    .preview-div{class:'preview-div card-text noselect','ng-bind-html'=>'back_side'}
+
+    = f.text_area :data, 'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'cardDataString'
+    
+    = f.text_area :front_side, 'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'front_side',style:'display:none'
+    
+    = f.text_area :back_side, 'class' =>'card-text form-control','cal-crypt-input'=>true,'ng-model'=>'back_side',placeholder:'back side',style:'display:none'
+    = render partial: 'keyword_selector',:locals => {:flashcard => @flashcard}
+
+    = submit_button f

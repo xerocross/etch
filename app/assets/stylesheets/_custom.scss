@@ -1,0 +1,306 @@
+body {
+  padding-bottom:3em;
+}
+
+a {
+ cursor: pointer;
+}
+
+a:hover {
+text-decoration:none; 
+}
+a:active {
+text-decoration:none; 
+}
+h2 {
+  margin-left:5px;
+}
+
+ul.dropdown-menu li a {
+  line-height: 3em;
+}
+
+
+.tip {
+    //max-width: 400px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.navbar-left img{
+    margin-top:5px;
+    margin-left:5px;
+    
+}
+
+.process-buttons {
+ margin-top:20px;   
+}
+
+
+
+.left, .right {
+    cursor: pointer;
+}
+.navbar {
+    margin-bottom: 0px;
+}
+
+.dont-break-out {
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.narrow-form {
+max-width:500px   
+}
+.narrow {
+max-width:500px   
+}
+
+header, .navbar-nav .open .dropdown-menu > li > a {
+  line-height: 30px;
+}
+
+
+footer div {
+    text-align:center   
+}
+
+.navbar {
+    border-radius:0px;
+    font-size: 17pt;
+}
+.navbar .dropdown-menu {
+    font-size: 16pt;
+}
+
+tags-input .tags .tag-list {
+    color: inherit;
+}
+
+.keyword {
+    background: #3498db;
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
+    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+    -webkit-border-radius: 20;
+    -moz-border-radius: 20;
+    border-radius: 20px;
+    font-family: Arial;
+    color: #ffffff;
+    padding: 4px 4px 4px 4px;
+    text-decoration: none;
+    font-weight: bold;
+    display:inline-block;
+}
+
+
+
+nav a:hover {
+ text-decoration:none; 
+}
+
+footer {
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.navbar-header img {
+  height:35px; 
+}
+
+.long-text {
+ text-align:justify;   
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.status {
+  font-size:110%;
+  padding-left:20px;
+  background-color:yellow;
+  font-weight:bold;
+}
+
+@font-face {
+    font-family: myComicSans;
+    src: url(asset-path('comicsans.ttf'));
+}
+
+h1 {
+  color:palegreen;
+  margin:0px;
+  
+  font-family: myComicSans, cursive, sans-serif;
+  padding-left:10px;
+  text-shadow: 1px 1px #2f632f;
+}
+
+
+@media only screen and (max-width : 480px) {
+  .container-fluid {
+    margin:0px;
+    padding:0px;
+  }
+
+  
+  .pad {
+    padding-left:15px;
+    padding-right:15px;
+  }
+}
+
+.row {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+nav h2 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-size: 150%;
+}
+
+h3 {
+  font-size: 130%;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+nav {
+  color:black;
+}
+nav h2 a {
+  color: black;
+  
+}
+nav h2 {
+  font-family: myComicSans, cursive, sans-serif;
+}
+
+nav .nav li a {
+  padding-top:4px;
+  color:black;
+  
+}
+
+.masthead {
+  font-family: myComicSans, cursive, sans-serif;
+}
+
+nav {
+  font-size:120%;
+  padding-top:10px;
+  padding-bottom:10px;
+  margin-bottom:10px;
+  
+}
+
+.nav-pills li {
+  font-size:120%;
+  font-weight:bold;
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+.tapglass .q-group {
+  display: inline-block;
+  padding-top:5px;
+  padding-bottom:5px;
+
+}
+
+.answer{
+font-weight: bold;  
+}
+.preview-div.front .answer{
+
+}
+.preview-div.back .answer{
+  display:auto;
+}
+
+.q-group .blank{
+  min-width:4em;
+}
+.q-group {
+  min-width:4em;
+  cursor:pointer;
+}
+
+.welcome nav h2 {
+  font-size: 300%;
+}
+
+
+.buffer {
+  margin-bottom: 1em;
+}
+
+.status-top {
+  width: 100%;
+  position:fixed;
+  top: 0px;
+  left: 0px;
+}
+
+
+.paypal_btn {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-radius: 5px;
+}
+
+.marketing section:nth-child(even) {
+  background-color:#e2f9e0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.jumbotron {
+  background-color:#e2f9e0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.etch.welcome .container-fluid {
+  padding-left:0px;
+  padding-right:0px;
+}
+
+.etch.welcome h3 {
+  
+}
+.etch.welcome .lead {
+  text-align:justify;
+}
+
+
+.spinner {
+  text-align: center;
+  font-size: 22pt;
+}
+
+flashcard-preview {
+}

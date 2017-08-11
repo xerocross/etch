@@ -1,0 +1,29 @@
+if( 'function' === typeof importScripts) {
+    self.importScripts('<%= asset_path("base64.js")%>')
+    self.importScripts('<%= asset_path("encryption.js")%>');
+
+    var decrypt = function(input, password) {
+        var re = /!([a-zA-Z0-9+/=]*)!/g;
+        var match = re.exec(input);
+        if (match === null)
+            return input;
+        var ciphertext = match[1];
+        var plaintext = AESDecryptCtr(base64_decode(ciphertext), password, 256);
+        return plaintext;
+    };
+
+    var received = function(e) {
+        var obj = JSON.parse(e.data)
+        var cards = obj.cards;
+        var password = obj.password;
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].front_side = decrypt(cards[i].front_side, password);
+            cards[i].back_side = decrypt(cards[i].back_side, password);
+            if (typeof cards[i].data === "string")
+              cards[i].data = decrypt(cards[i].data, password);
+        }
+        postMessage(JSON.stringify({cards: cards}));
+    }
+
+    addEventListener('message',received,false);
+}

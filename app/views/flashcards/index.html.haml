@@ -1,0 +1,29 @@
+%div{"ng-controller"=>"flashcardsIndex"}
+  %table.table.table-striped.table-hover
+    %tr{"ng-repeat"=>"card in cards track by card.id"}
+      %td
+        .row
+          .col-xs-2
+            ID: {{card.id}}
+            .btn-group
+              %button{type:"button", class:"btn btn-default dropdown-toggle", data:{toggle:"dropdown"}, aria:{haspopup:"true",expanded:"false"}}
+                %span{class:"glyphicon glyphicon-cog"}
+              %ul.dropdown-menu
+                %li
+                  %a{href:"/flashcards/{{card.id}}"}
+                    Show
+                %li
+                  %a{href:"/flashcards/{{card.id}}/edit"}
+                    Edit
+                %li
+                  %a{href:"#","ng-click"=>"delete($event, card.id, $index)"}
+                    Delete
+          .col-xs-10
+            %flashcard-show{"data-card"=>"card", "data-macro"=>"{{card.macro}}"}
+
+                
+          
+  .text-center
+    %a{"ng-click"=>"more()"}
+      more
+      

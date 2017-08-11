@@ -1,0 +1,21 @@
+%div{'ng-controller'=>"fillInTheBlank"}
+  = form_for @flashcard, :html=>{'cal-crypt-form'=>true,class:'form-group pad'} do |f|
+    =hidden_field_tag('flashcard[macro]', 'fill_blank')
+    %p
+      = label_tag :input, 'Fill In the Blank Macro',class:'sr-only'
+      = text_area_tag :input, nil, 'ng-model'=>'generator',class:'form-control',placeholder:'Garfield\'s favorite food is ??lasagna?? and he hates ??Mondays??.'
+    = f.label :front_side, nil, class:'sr-only'
+    = f.text_area :front_side, 'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'front_side',style:'display:none'
+    = f.text_area :data, 'ng-model'=>"cardData",'cal-crypt-input'=>'true',style:'display:none'
+    
+    
+
+    %h3 Preview
+    %flashcard{'data-card'=>'card','ready'=>'card.ready'}
+
+
+    = f.label :back_side,nil, class:'sr-only' 
+    = f.text_area :back_side, 'class' =>'card-text form-control','cal-crypt-input'=>true,'ng-model'=>'back_side',placeholder:'back side',style:'display:none'
+
+    = render partial: 'keyword_selector',:locals => {:flashcard => @flashcard}
+    = submit_button f

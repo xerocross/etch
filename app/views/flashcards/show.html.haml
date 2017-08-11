@@ -1,0 +1,7 @@
+%script
+  =raw("var CARD = #{render partial: 'flashcard.json', locals:{flashcard: @flashcard}};");
+.pad{}
+  = render @flashcard
+  = link_to 'Edit', edit_flashcard_path(@flashcard)
+  | 
+  = link_to 'Flashcards', flashcards_path

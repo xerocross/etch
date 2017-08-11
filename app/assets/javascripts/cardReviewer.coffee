@@ -60,16 +60,15 @@ cardReviewer = ($scope, server,$timeout,statusPrinter,cardService, math)->
     cardId = getCurrentCard().id
     if confirm("This review of card #{cardId} was too soon?")
       removeCurrentCard()
-      server.process cardId, "too_soon", ->
+      server.tooSoon cardId, ->
         msg = "Saved: this review of #{cardId} was marked as too soon."
         statusPrinter.print(msg)
-
 
   $scope.tooLate = ->
     cardId = getCurrentCard().id
     if confirm("This review of card #{cardId} was too late?")
       removeCurrentCard()
-      server.process cardId, "too_late", ->
+      server.tooLate cardId, ->
         statusPrinter.print("Saved: this review for #{cardId} was marked as too late.")
 
   $scope.gotIt = ->

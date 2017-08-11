@@ -1,0 +1,37 @@
+%script
+  - if !flashcard['front_side'].nil?
+    = "FRONT = '#{flashcard['front_side']}'".html_safe
+  - else
+    = "FRONT = '';".html_safe
+  - if !flashcard['back_side'].nil?
+    = "BACK =  '#{flashcard['back_side']}'".html_safe
+  - else
+    = "BACK = '';".html_safe
+
+%div{'ng-controller'=>"cardForm"}
+  = form_for flashcard, :html=>{'cal-crypt-form'=>true,class:'form-group'} do |f|
+    .row.flashcard-form-row
+      .col-sm-6
+        .field.form-div
+          = f.label :front_side,class:'sr-only'
+          = f.text_area :front_side,'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'front_side','ng-blur'=>'scanFront()',placeholder:'front side'
+      .col-sm-6
+        .preview-div.card-text.noselect{'ng-bind-html'=>'front_side'}
+
+    .row.flashcard-form-row.back
+      .col-sm-6
+        .field.form-div
+          = f.label :back_side,class:'sr-only'
+          = f.text_area :back_side,'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'back_side','ng-blur'=>'scanFront()',placeholder:'front side'
+      .col-sm-6
+        .preview-div.card-text.noselect{'ng-bind-html'=>'back_side'}
+
+    
+    .row.field.form-div
+      .col-sm-6
+        = render partial: 'keyword_selector',:locals => {:flashcard => flashcard}
+
+
+    .row.actions.form-div
+      .col-sm-6
+        = submit_button f

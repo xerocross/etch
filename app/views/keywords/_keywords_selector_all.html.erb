@@ -1,0 +1,11 @@
+<div>
+<form action="<%= revisit_flashcards_path %>" method="GET">
+
+    <select name="keyword">
+    <% keywords.each do |keyword| %>
+        <%="<option value=\"#{keyword.id}\">#{keyword.text}</option>".html_safe %>
+    <% end %>
+    </select>
+    <input type="submit" value="go">
+</form>
+</div>

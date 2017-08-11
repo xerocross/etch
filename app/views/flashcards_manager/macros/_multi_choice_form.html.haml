@@ -1,0 +1,45 @@
+%div.pad.narrow{'ng-controller'=>"multiChoiceMacro"}
+  = form_for @flashcard, :html=>{'cal-crypt-form'=>true,class:'form-group','ng-model-options'=>"{ allowInvalid: true, debounce: 500 }"} do |f|
+    =hidden_field_tag('flashcard[macro]', 'multi_choice')
+    .input-group.buffer
+      %strong{class:'input-group-addon'}
+        Question:
+      = text_area_tag :question,nil, 'ng-model'=>'dynamicCard.data.question',class:'form-control'
+
+    .well
+      %div{'ng-repeat'=>'choice in dynamicCard.data.answers track by $index'}
+        .input-group
+          %strong{class:'input-group-addon'}
+            Correct:
+          = text_area_tag '',nil, 'ng-model'=>'dynamicCard.data.answers[$index]',class:'form-control'
+          .input-group-addon.btn.btn-default{'ng-if'=>'$last && dynamicCard.data.answers.length > 1','ng-click'=>'removeCorrect()'}
+            %span{class:'glyphicon glyphicon-minus'}
+      %button.btn.btn-default{type:'button','ng-click'=>'addCorrect()'}
+        %span{class:'glyphicon glyphicon-plus'}
+    .well
+      %div{'ng-repeat'=>'choice in dynamicCard.data.distractors track by $index'}
+        .input-group
+          %strong{class:'input-group-addon'}
+            Incorrect:
+          = text_area_tag '',nil, 'ng-model'=>'dynamicCard.data.distractors[$index]',class:'form-control'
+          .input-group-addon.btn.btn-default{'ng-if'=>'$last && dynamicCard.data.distractors.length > 1','ng-click'=>'removeDistractor()'}
+            %span{class:'glyphicon glyphicon-minus'}
+      %button.btn.btn-default{type:'button','ng-click'=>'addDistractor()'}
+        %span{class:'glyphicon glyphicon-plus'}
+        
+        
+    %div.buffer
+      %strong
+        Answer Comments (optional)
+      =text_area_tag '',nil, 'ng-model'=>'dynamicCard.data.answerComment',class:'form-control'
+    = f.text_area :front_side, 'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'front_side',style:'display:none'
+    = render partial: 'keyword_selector',:locals => {:flashcard => @flashcard}
+    = f.text_area :data, 'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'dynamicCardDataString'
+    
+    %h3
+      Preview
+    %flashcard.flashcard{'data-card'=>'card','ready'=>'card.ready',"ng-click"=>"toggle()"}
+
+    
+    
+    = submit_button f

@@ -1,0 +1,25 @@
+%div.pad.narrow{'ng-controller'=>"foreignVocab"}
+  = form_for @flashcard, :html=>{'cal-crypt-form'=>true,class:'form-group'} do |f|
+    =hidden_field_tag('flashcard[macro]', 'foreign_vocab')
+    %div{class:'form-inline'}
+      .input-group
+        %span{class:'input-group-addon'}
+          How do you say
+        = text_field_tag :from, nil, 'ng-model'=>'originWord',class:'form-control',placeholder:"original word"
+      .input-group
+        %span{class:'input-group-addon'}
+          in 
+        = text_field_tag :to, nil, 'ng-model'=>'language',class:'form-control',placeholder:"language"
+        %span{class:'input-group-addon'}
+          ?
+      = text_field_tag :language, nil, 'ng-model'=>'targetWord',class:'form-control', placeholder: "target word"
+
+    = f.text_area :data, 'ng-model'=>'cardData','cal-crypt-input'=>'true',class:'form-control',style:'display:none'
+
+
+    = f.text_area :front_side, 'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'front_side',style:'display:none'
+    
+    = f.text_area :back_side, 'class' =>'card-text form-control','cal-crypt-input'=>true,'ng-model'=>'back_side',placeholder:'back side',style:'display:none'
+    = render partial: 'keyword_selector',:locals => {:flashcard => @flashcard}
+
+    = submit_button f

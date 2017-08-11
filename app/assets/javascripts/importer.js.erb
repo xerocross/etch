@@ -1,0 +1,134 @@
+(function(){
+  var flashcardImporter = function($scope, $http, $q, crypt, importService) {
+    var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
+    $scope.availableKeywords = [];
+    $http.get('/keywords.json').then(function(dataObj) {
+      $scope.availableKeywords = dataObj.data;
+      for (var i = 0; i < $scope.availableKeywords.length; i++)
+      {
+        $scope.availableKeywords[i].text = crypt.decrypt($scope.availableKeywords[i].text); 
+      }
+    });
+    $scope.importText;
+    var cards;
+    var encryptCards = function() {
+      for (var i = 0; i < cards.length; i++) {
+        console.log(cards[i]);
+        if (cards[i].front_side)
+          cards[i].front_side = crypt.encrypt(cards[i].front_side);
+        if (cards[i].back_side)
+          cards[i].back_side = crypt.encrypt(cards[i].back_side);
+        if (cards[i].data)
+          cards[i].data = crypt.encrypt(JSON.stringify(cards[i].data));
+      }
+    };
+    
+    
+    
+    var getKeywordByText = function(text) {
+      for (var i = 0; i < $scope.availableKeywords.length; i++) {
+        if ($scope.availableKeywords[i].text === text)
+          return $scope.availableKeywords[i]
+      }
+      return null;
+    };
+    var newKeywords = [];
+    var scanKeywords = function() {
+      for (var i = 0; i < cards.length; i++) {
+        var keywords = cards[i].keywords;
+        var keywordObjects = [];
+        
+        for (var j = 0; j < keywords.length; j++) {
+          var obj = getKeywordByText(keywords[j]);
+          if (obj === null) {
+            obj = {text: keywords[j]};
+            $scope.availableKeywords.push(obj);
+            newKeywords.push(obj);
+          }
+          keywordObjects.push(obj);
+        }
+        cards[i].keywords = keywordObjects
+      }
+    };
+    var postNewKeywords = function() {
+      var promises = [];
+      var addIdGenerator = function(keywordObj) {
+        return addId = function(dataObj) {
+          keywordObj.id = dataObj.data.id;
+        }
+      };
+      for (var i = 0; i < newKeywords.length; i++) {
+        newKeywords[i].text = crypt.encrypt(newKeywords[i].text);
+        promises.push(
+          $http({
+          method: 'POST',
+          url: '/keywords.json',
+          data: {
+            keyword : newKeywords[i]
+          },
+          headers: {
+            'X-CSRF-Token': AUTH_TOKEN
+          }
+          }).then(addIdGenerator(newKeywords[i]))
+        );
+      }
+      return $q.all(promises);
+    };
+    var create = function() {
+      
+      var promises = [];
+      for (var i = 0; i < cards.length; i++) {
+        console.log("about to post");
+        console.log(cards[i]);
+        promises.push($http({
+          method: 'POST',
+          url: '/flashcards.json',
+          data: {
+            flashcard : cards[i],
+            keyword_string: JSON.stringify(cards[i].keywords)
+          },
+          headers: {
+            'X-CSRF-Token': AUTH_TOKEN
+          }
+        }));
+      }
+      return $q.all(promises);
+    };
+    $scope.busy = false;
+    
+    var parseCards = function() {
+      try {
+        cards = JSON.parse($scope.importText);
+        return true;
+      } catch(e) {
+        alert("Import string was not properly formatted.");
+        console.log(e);
+        return false;
+      }
+      
+    };
+    $scope.submit = function($event) {
+      $event.preventDefault();
+      $scope.busy = true;
+      if (parseCards()) {
+        
+        for (var i = 0; i < cards.length; i++) {
+          cards[i] = importService.import(cards[i]);
+        }
+        
+        
+        scanKeywords();
+        encryptCards();
+        postNewKeywords().then(create).then(function(){
+          $scope.importText = '';
+          alert("import successful");
+          $scope.busy = false;
+        });
+      } else {
+        $scope.busy = false;
+      }
+    };
+    
+  };
+  app.controller('flashcardImporter',['$scope', '$http' ,'$q', 'crypt', 'importService', flashcardImporter]);
+})();

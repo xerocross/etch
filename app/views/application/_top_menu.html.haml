@@ -1,0 +1,41 @@
+%nav
+  %h2{style:'display:inline-block'}
+    -if !@back.nil?
+      =link_to @back, nil do
+        %span{class:'glyphicon glyphicon-chevron-left'}
+    = title(controller.controller_name, controller.action_name).html_safe
+  %ul{class:'nav nav-pills pull-right'}
+    %li.dropdown
+      %a.dropdown-toggle{data: {toggle: "dropdown" },role:'button',aria:{haspopup:true,expanded:false}}
+        .flashmenu
+          %span{class:'glyphicon glyphicon-flash'}
+          %span{class:'caret'}
+      %ul.dropdown-menu.pull-right
+        %li
+          =link_to(root_path, nil) do
+            Home
+        %li
+          =link_to(study_review_path, nil) do
+            Cards Due
+        %li
+          =link_to(study_memorize_path,nil) do
+            Memorize New Cards
+        %li
+          =link_to(study_browse_path,nil) do
+            Study By Keyword
+        %li
+          =link_to(flashcards_manager_new_path,nil) do
+            Make Cards
+        %li
+          = link_to(destroy_user_session_path,  method: :delete) do
+            Log Out
+
+
+
+        
+    -if lookup_context.find_all("#{controller.controller_name}/_#{controller.action_name}_context_menu").any?
+      %li.dropdown{style:'','ng-if'=>'!empty'}
+        %a{class:"dropdown-toggle", id:"dropdownMenu2", 'data-toggle'=>"dropdown", 'aria-haspopup'=>"true", 'aria-expanded'=>"true"}
+          %span{class:'glyphicon glyphicon-option-vertical'}
+        %ul{class:"dropdown-menu pull-right", 'aria-labelledby'=>"dropdownMenu2"}
+          = render partial: "#{controller.controller_name}/#{controller.action_name}_context_menu"

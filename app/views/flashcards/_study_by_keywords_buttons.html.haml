@@ -1,0 +1,5 @@
+#review-buttons{class:'btn-group btn-group-lg', 'ng-show'=>'!loading && !empty'}
+  %button{class:'btn btn-lg btn-default hidden-sm hidden-md hidden-lg','ng-click'=>'left()','ng-disabled'=>'!leftExists()'}
+    %span{class:'glyphicon glyphicon-arrow-left'}
+  %button{class:'btn btn-default btn-lg hidden-sm hidden-md hidden-lg','ng-click'=>'right()','ng-disabled'=>'!rightExists()'}
+    %span{class:'glyphicon glyphicon-arrow-right'}

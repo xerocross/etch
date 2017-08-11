@@ -1,0 +1,19 @@
+%div{"ng-switch"=>"card.macro"}
+  %div{"ng-switch-when"=>"multi_choice"}
+    %div.text-left{"ng-bind-html"=>"card.dynamicCard.data.question"}
+    .buffer
+    %div.text-left
+      ="Choose all that apply."
+      %ul.list-group
+        %li.list-group-item.text-left{'ng-repeat'=>"choice in card.choices", 'ng-class'=>"{'list-group-item-success' : choice.correct && card.backVisible}"}
+          %span{"ng-bind-html"=>"choice.text"}
+      %div{'ng-if'=>"(card.dynamicCard.data.answerComment)",'ng-show'=>'card.backVisible'}
+        %strong
+          Notes:
+        
+        %div{"ng-bind-html"=>"card.dynamicCard.data.answerComment"}
+  %div{"ng-switch-when"=>"fill_blank"}
+    %div{class:"card_front","compile"=>"card.front_side"}
+  %div{"ng-switch-default"=>true}
+    %div{class:"card_front","compile"=>"card.front_side"}
+    %div{class:"card_back","ng-show"=>"card.backVisible","compile"=>"card.back_side"}

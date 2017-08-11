@@ -1,0 +1,76 @@
+
+<script>
+    
+    var newUser = function($scope) {
+        $scope.submit = function() {
+            
+        };
+    }
+    angular.module('callisto').controller('newUser',['$scope',newUser])
+</script>
+
+
+
+<div ng-controller="newUser">
+<%= form_for user, :url => user_path,html:{:name =>'register','ng-submit' => 'submit()',class:'narrow-form'} do |f| %>
+  
+    <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+      <label for="token">Invitation Token</label>
+      <input name="token" ng-model="token" type="text" class="form-control" required>
+        <p ng-show="register['token'].$dirty && register['token'].$error.required" class="alert alert-danger">
+        token is required  
+        </p>
+  </div>
+
+  <div class="field" >
+    
+    <%= f.label :username,'Username' %><br>
+    <input ng-model="username" class="form-control" type="text" name="user[username]" id = "user_username" required>
+      <p ng-show="register['user[username]'].$dirty && register['user[username]'].$error.required" class="alert alert-danger">
+    username is required  
+    </p>
+  
+    </div>
+
+    <div class="field">
+        <%= f.label :password, 'Password' %><br>
+        <input type="password" name="user[password]" ng-model = 'password' class="form-control" required>
+    </div>
+    <p ng-show="register['user[password]'].$dirty && register['user[password]'].$error.required" class="alert alert-danger">
+    password is required  
+    </p>
+
+    <div class="field">
+    <%=  label_tag 'pw_confirm','Confirm Password'  %><br>
+    <%= password_field_tag 'pw_confirm',nil,'ng-model'=>'passwordConfirm',class: 'form-control','compare-to' => "password" %>
+    </div>
+    <p ng-show="register['pw_confirm'].$dirty && register['pw_confirm'].$error.compareTo" class="alert alert-danger">
+    must match password field  
+    </p>
+
+    <div class="field">
+        <%= f.label :email,'Email' %><br>
+        <input name = "user[email]" ng-model="email" class="form-control" required>
+        <p ng-show="register['user[email]'].$dirty && register['user[email]'].$error.required" class="alert alert-danger">
+    email is required  
+    </p>
+    </div>
+    
+  <div class="actions">
+    <%= f.submit'Register',:class=>'btn btn-primary' %>
+  </div>
+<% end %>
+    
+</div>

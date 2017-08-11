@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang = "en">
+  <head > 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Etch</title>
+    <meta property="og:title" content="XeroEtch"/>
+    
+    <meta property="og:image" content = "https://www.xeroetch.com/etch-study.gif" />
+    <meta property="og:image:secure_url" content="https://www.xeroetch.com/etch-study.gif"/>
+    <meta property="og:description" content="Remember anything.  Indefinitely."/>
+    
+    
+    <%= csrf_meta_tags %>
+    
+
+    
+      
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+
+
+    
+
+
+    
+  </head>
+  
+          
+  <body class = "<%= "#{controller.controller_name} #{controller.action_name}"%>">
+    
+  <div <%= "ng-controller='#{@angular_controller}'".html_safe if !@angular_controller.nil? %>  >
+
+
+
+    <%= render partial:'flash' %>
+    <%= if user_signed_in? then render 'application/top_menu' else render 'application/top_sign_in' end %>
+      <main>
+      
+      
+        
+        
+      <div id="status"></div>
+      
+        
+      <div class="container-fluid">
+        <%= yield %>
+        
+        
+        <footer>
+          <%= render partial: 'panhandle_bar' %>
+        </footer>
+        
+        <div class="hidden-xs"> 
+          <%= render partial: 'footer' %>
+        </div>
+      </div>
+        
+      </main>
+    </div>
+    
+    
+
+    
+    <%= javascript_include_tag 'application' %>
+      <script>
+        $(document).on('ready',function(){
+          angular.bootstrap(document.body, ['callisto']);
+        });
+      </script>
+    
+    
+    
+
+  </body>
+</html>

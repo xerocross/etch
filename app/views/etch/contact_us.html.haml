@@ -1,0 +1,15 @@
+.pad
+  = form_tag('/email_us',class:'form-group narrow-form') do
+    %div
+      %p
+        This is a one-man operation, so if you have any problems just send "us" an email and we'll straighten it out.  You will receive personal attention from the chief engineer&mdash;not some help desk person.
+      %p
+        Please do not use this form to request features.  We'd love to add the feature you want, but time is scarce.
+    .field
+      =label_tag :subject
+      = text_field_tag :subject, nil, class:'form-control',placeholder:'subject'
+    .field
+      =label_tag :message
+      = text_area_tag :message, nil, class:'form-control',placeholder:'message',rows:4
+    .action
+      = submit_tag 'Send', class:'btn btn-success'

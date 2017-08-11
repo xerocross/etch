@@ -1,0 +1,12 @@
+.pad
+  .panel{class:'panel-warning'}
+    .panel-heading
+      %h3{class:"panel-title"}
+        Warning
+    .panel-body
+      This functionality is experimental.  To import cards, enter a JSON-formatted string in the textarea below&mdash;formatted exactly as the Etch export string is formatted.  This feature is not robust enough to handle any deviation.
+  %form{action:'',class:"form-group",'ng-controller'=>"flashcardImporter",'ng-submit'=>"submit($event)"}
+    %textarea{'ng-model'=>"importText",class:"form-control", name:"importCards"}
+    %p.action
+      %button{'ng-disabled'=>"busy",type:"submit", 'ajax-button'=>true, 'busy'=>"busy", class:"btn btn-primary"}
+        Import

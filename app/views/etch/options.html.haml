@@ -1,0 +1,23 @@
+.pad
+  %ul{class:"nav nav-pills nav-stacked"}
+    %li{role:"presentation"}
+      =link_to study_path, nil do
+        =icon('study').html_safe
+        Study
+    %li{role:"presentation"}
+      =link_to flashcards_manager_path, nil do
+        =icon('flashcards_manager').html_safe
+        Flashcards
+    %li{role:"presentation"}
+      =link_to keywords_path, nil do
+        =icon('keywords').html_safe
+        Keywords
+    %li{role:"presentation"}
+      =link_to account_options_path, nil do
+        =icon('accounts').html_safe
+        Account
+    %li
+      =link_to(contact_us_path, nil) do
+        Contact Us
+
+        

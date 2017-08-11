@@ -1,0 +1,72 @@
+%div{"ng-switch"=>"card.macro"}
+  %div{"ng-switch-when"=>"multi_choice"}
+    .row
+      .col-sm-6
+        %div
+          Due Model: {{card.due_model | number : 2}}
+        %div
+          %strong
+            Keywords:
+          %span{"ng-repeat"=>"keyword in card.keywords"}
+            {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+        %div
+          %strong
+            Question: 
+          {{card.dynamicCard.data.question}}
+        %strong
+          Correct Option(s):
+        %span{"ng-repeat"=>"answer in card.dynamicCard.data.answers"}
+          ({{$index + 1}}) {{answer}}
+        %strong
+          Incorrect Option(s):
+        %span{"ng-repeat"=>"distractor in card.dynamicCard.data.distractors"}
+          ({{$index + 1}}) {{distractor}}
+        %strong
+          Answer Comment:
+        {{card.dynamicCard.data.answerComment}}
+  %div{"ng-switch-when"=>"fill_blank"}
+    .row
+      .col-sm-6
+        %div
+          Due Model: {{card.due_model | number : 2}}
+        %div
+          %strong
+            Keywords:
+          %span{"ng-repeat"=>"keyword in card.keywords"}
+            {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+        %strong
+          Fill Blank Generator:
+        %div{"ng-bind-html"=>"card.dynamicCard.data.generator"}
+  %div{"ng-switch-when"=>"foreign_vocab"}
+    .row
+      .col-sm-6
+        %div
+          Due Model: {{card.due_model | number : 2}}
+        %div
+          %strong
+            Keywords:
+          %span{"ng-repeat"=>"keyword in card.keywords"}
+            {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+        %span
+          How do you say {{card.dynamicCard.data.originWord}} in {{card.dynamicCard.data.language}}? 
+        %span
+          {{card.dynamicCard.data.targetWord}}
+  %div{"ng-switch-default"=>true}
+    .row
+      .col-sm-6
+        %div
+          Due Model: {{card.due_model | number : 2}}
+        %div
+          %strong
+            Keywords:
+          %span{"ng-repeat"=>"keyword in card.keywords"}
+            {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+        %strong
+          Front:
+        %div{"ng-bind-html"=>"card.front_side"}
+      %div.col-sm-6
+        %strong
+          Back:
+        %div{"ng-bind-html"=>"card.back_side"}
+  
+  

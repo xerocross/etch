@@ -1,0 +1,18 @@
+%main#welcome
+  .container-fluid
+    .jumbotron
+      %h1{style:""}
+        Remember anything.  Indefinitely.
+    .marketing
+
+      = render partial: 'etch/welcome/how_it_works'
+      %section
+        = render partial: 'etch/welcome/mobile_support'
+      %section
+        = render partial: 'etch/welcome/why_another'
+      %section
+        = render partial: 'etch/welcome/math_support'
+      %section
+        = render partial: 'etch/welcome/cool_stuff'
+      %section
+        = render partial: 'etch/welcome/sign_up' 

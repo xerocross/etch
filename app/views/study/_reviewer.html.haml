@@ -1,0 +1,8 @@
+%section{class:'viewModule', 'ng-show'=>'ready', 'ng-cloak'=>true}
+  %browsebox{'data-array'=>'cards','data-more'=>'addPage()','data-index'=>'index','data-is-max-loaded'=>'isMaxPage','data-loading'=>'loading'}
+    %card-slot
+      %div{'ng-repeat'=>'card in cards track by $index'}
+        %flashcard.flashcard{'card'=>'cards[$index]','ng-click'=>'toggle()','ng-show'=>'$index==index'}
+    %button-slot
+      =render partial: "#{controller.action_name}_buttons"
+  

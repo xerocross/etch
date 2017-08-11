@@ -1,0 +1,25 @@
+
+<div >
+    <p class="pad">Deleting a keyword does <em>not</em> delete associated flashcards.</p>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Text</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @keywords.each do |keyword| %>
+      <tr class="writing-surface">
+        <td><%= keyword.id %></td>
+        <td cal-decrypt><%= keyword.text %></td>
+        <td><%= link_to 'Edit', edit_keyword_path(keyword) %></td>
+        <td><%= link_to 'Delete', keyword, method: :delete, data: { confirm: 'Are you sure you want to delete this keyword  Note: deleting a keyword does not delete associated flashcards?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+

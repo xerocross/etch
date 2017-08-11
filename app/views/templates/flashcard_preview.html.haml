@@ -1,0 +1,37 @@
+%div{"ng-switch"=>"card.macro"}
+  %div{"ng-switch-when"=>"multi_choice"}
+    %div
+      %strong
+        \#:
+      %span{"ng-repeat"=>"keyword in card.keywords"}
+        {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+    %div
+      {{card.dynamicCard.data.question | excerpt}}
+  %div{"ng-switch-when"=>"fill_blank"}
+    %div
+      %strong
+        \#:
+      %span{"ng-repeat"=>"keyword in card.keywords"}
+        {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+    %div
+      {{card.dynamicCard.data.generator | excerpt}}
+  %div{"ng-switch-when"=>"foreign_vocab"}
+    %div
+      %strong
+        \#:
+      %span{"ng-repeat"=>"keyword in card.keywords"}
+        {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+    %div
+      %span
+        How do you say {{card.dynamicCard.data.originWord}} in {{card.dynamicCard.data.language}}? 
+      %span
+        {{card.dynamicCard.data.targetWord}}
+  %div{"ng-switch-default"=>true}
+    %div
+      %strong
+        \#:
+      %span{"ng-repeat"=>"keyword in card.keywords"}
+        {{keyword.text | decrypt}}{{$last ? "." : "; "}}
+    %div
+      {{card.front_side | excerpt}}
+  

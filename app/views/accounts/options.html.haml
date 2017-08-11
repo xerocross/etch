@@ -1,0 +1,9 @@
+.pad
+  = render partial: 'users/registrations/account_info'
+  %ul{class:"nav nav-pills nav-stacked"}
+    %li
+      = link_to(account_edit_path, nil) do
+        Edit Account Info
+    %li
+      = link_to(account_brain_path, nil) do
+        Brain

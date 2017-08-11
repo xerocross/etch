@@ -1,0 +1,82 @@
+<script>
+    var flashcards = function($scope, $http, $location, server) {
+        var auth = $('meta[name=csrf-token]').attr('content');
+        console.log("auth " + auth);
+        
+        
+        server.setAuthenticityToken(auth);
+        
+        console.log('it was run');
+        var path = "<%=flashcards_path :format=>:json%>";
+        
+        $http.get(path)
+          .then(function(returnObj){
+            var data = returnObj.data;
+            console.log(data);
+            $scope.cards = data;
+            //alert('ha')}
+            });
+        
+        var getCardById = function(cardId) {
+            var cards = $scope.cards;
+            for (var i = 0; i < cards.length; i++) {
+                if (cards[i].id === cardId)
+                    return cards[i];
+            }
+            return null;
+        };
+        
+        $scope.delete = function(cardId) {
+            if (!confirm("Are you sure?"))
+                return false;
+            console.log("delete " +cardId);
+            server.delete(cardId, function(){
+                var index = $scope.cards.indexOf(getCardById(cardId));
+                if (index > -1)
+                    $scope.cards.splice(index, 1);
+            });
+        }
+    };
+    //angular.module('callisto').controller('flashcards',//['$scope','$http','$location', 'server',flashcards]);
+        
+</script>
+
+<script>
+    var navigate = function($scope, $rootScope, main) {
+        $scope.pages = ['study','review','new_flashcard','keywords'];
+        $scope.page = 'review';
+        $scope.set = function(page) {
+            console.log(page);
+            $scope.page = page;
+            $rootScope.$broadcast('pageChange', $scope.page);
+        }
+    };
+    angular.module('callisto').controller('navigate',['$scope','$rootScope', navigate]);
+    
+    var main = function($scope) {
+        $scope.page = 'review';
+        
+        $scope.$on('pageChange', function (event, arg) {
+            console.log('got your ' + arg);
+            $scope.receiver = 'got your ' + arg;
+            $scope.page = '_' + arg +'.html';
+            console.log($scope.page);
+        });
+    };
+    angular.module('callisto').controller('main',['$scope',main]);
+    
+</script>
+
+<p id="notice"><%= notice %></p>
+
+<nav id="navbar" ng-controller="navigate">
+    <a ng-repeat="page in pages" id="studyLink" ng-click='set(page)'>{{page}}</a>
+    
+</nav>
+<a href="_new_flashcard.html">go</a>
+<main ng-controller="main" ng-include="page">
+    
+</main>
+
+
+

@@ -1,0 +1,2 @@
+module CallistoHelper
+end

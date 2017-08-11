@@ -1,0 +1,16 @@
+
+= form_for(:user, as: :user, url: session_path(:user), html:{name: 'loginForm',class:'navbar-form'}) do |f|
+  .form-group
+    = f.label :email,class:'sr-only'
+    = f.email_field :email, autofocus: true, class: 'form-control',placeholder:'email'
+  .form-group
+    = f.label :password,class:'sr-only'
+    = f.password_field :password, autocomplete: "off", class: 'form-control',placeholder:'password' 
+  .form-group{'ng-controller'=>'encryptionKeySetter'}
+    %label{for:'key',class:'sr-only'}
+      Key
+    %input.form-control{type:"text",name:"key",'ng-model'=>"newKey", placeholder:'{{keyStatus}}'}
+    %span{class:"btn-group",'ng-show'=>'loginForm.key.$dirty'}
+      %button{type:'button',class:'btn btn-default',id:'setKey','ng-click'=>'update(); loginForm.key.$setPristine()'}
+        set key
+  = f.submit "Log in", class:'btn btn-success'

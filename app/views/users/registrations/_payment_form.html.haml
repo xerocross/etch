@@ -1,0 +1,10 @@
+%p
+  =render partial: 'payment_info_alert'
+%label.sr-only{for:"card-element"}
+  Credit or Debit Card
+%div{'card-input'=>true,'payment-card'=>'paymentCard','stripe'=>'stripe'}
+  #card-element.pad
+  %div{class:'alert-danger'}
+    {{paymentError}}
+
+

@@ -1,0 +1,7 @@
+%script
+  = "var CARD_PATH = \"#{@path}\";".html_safe
+=include_tip @tip
+
+%div{}
+  .pad
+    =render partial: 'reviewer', :locals=> {:flashcards => @flashcards} 
