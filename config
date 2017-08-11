@@ -1,0 +1,66 @@
+Rails.application.routes.draw do
+  root :to => "etch#welcome"
+  
+  devise_for :users, controllers: { 
+    sessions: "users/sessions", 
+    registrations: "users/registrations"
+    }
+  resources :keywords
+  
+  get 'templates/multi_choice' => "templates#multi_choice"
+  get 'templates/flashcard_show' => "templates#flashcard_show"
+  get 'templates/browsebox' => "templates#browsebox"
+  get 'templates/flashcard_study' => "templates#flashcard_study"
+  get 'templates/flashcard_preview' => "templates#flashcard_preview"
+  get 'templates/flashcard_multi_choice_show' => "templates#flashcard_multi_choice_show"
+  
+  devise_scope :user do 
+    get 'change_payment_method' => "users/registrations#change_payment_method"
+    get 'account/edit', to: 'users/registrations#edit', as:'account/edit'
+    get 'account/log_in', to: 'users/sessions#new', as:'account/log_in'
+    get 'account/new', to: 'users/registrations#new', as:'account/new'
+  end
+  
+  
+  get '/about' => "etch#about", :as => "about"
+  post '/email_us' => "etch#email_us"
+  get '/xerocross' => "etch#xerocross", :as => "xerocross"
+
+  
+  resource :user
+    
+  get '/flashcards/:flashcard_id/keywords', to: 'keywords#index'
+
+  
+  resources :flashcards, only: [:index,:create,:update,:destroy, :edit, :show] do
+    member do
+      patch 'got_it'
+      patch 'too_soon'
+      patch 'too_late'
+    end
+  end
+
+  
+  resource :brain do
+    get 'show'
+    post 'prognosticate'
+  end
+  
+  get 'study', to: 'study#options'
+  get 'study/review', to: 'study#review'
+  get 'study/memorize', to: 'study#memorize'
+  get 'study/browse', to: 'study#browse'
+  get 'study/query', to: 'study#query'
+  
+  get 'etch/options', to: 'etch#options'
+
+  get 'account/options', to: 'accounts#options'
+  get 'account/brain', to: 'accounts#brain'
+  
+  get 'flashcards_manager', to: 'flashcards_manager#options'
+  get 'flashcards_manager/new', to: 'flashcards_manager#new'
+  get 'flashcards_manager/choose_creation_macro', to: 'flashcards_manager#choose_creation_macro'
+  get 'flashcards_manager/import', to: 'flashcards_manager#import'
+  get 'flashcards_manager/export', to: 'flashcards_manager#export'
+  get 'flashcards_manager/manage', to: 'flashcards_manager#manage'  
+end
