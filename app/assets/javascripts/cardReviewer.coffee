@@ -1,4 +1,4 @@
-cardReviewer = ($scope, server,$timeout,statusPrinter,cardService, math)->
+cardReviewer = ($scope, serverService, $timeout, statusPrinter, cardService, mathService, alertService)->
   cardPath = CARD_PATH
   # cards_path is a global that is set
   # in the template
@@ -9,10 +9,11 @@ cardReviewer = ($scope, server,$timeout,statusPrinter,cardService, math)->
   $scope.loading = true
 
   $scope.addPage = (callback)->
+    
     $scope.pageNum++
     pagePath = cardPath + "&page="+$scope.pageNum
     newCards = []
-    server.getCards(cardPath, {'page': $scope.pageNum}, newCards)
+    serverService.getCards(cardPath, {'page': $scope.pageNum}, newCards)
       .then (obj)->
         if (newCards.length is 0)
           $scope.isMaxPage = true
@@ -28,7 +29,7 @@ cardReviewer = ($scope, server,$timeout,statusPrinter,cardService, math)->
       card.processed = false
       card.backVisible = false
     $timeout()
-    math.typeset()
+    mathService.typeset()
     if (callback?)
       callback()
 
@@ -53,40 +54,38 @@ cardReviewer = ($scope, server,$timeout,statusPrinter,cardService, math)->
     cardId = $scope.currentCard.id
     if confirm("Delete card #{cardId}?")
       removeCurrentCard()
-      server.deleteCard cardId, ->
+      serverService.deleteCard cardId, ->
         statusPrinter.print("Successfully deleted card #{cardId}.")
 
   $scope.tooSoon = ->
     cardId = getCurrentCard().id
-    if confirm("This review of card #{cardId} was too soon?")
+    if alertService.confirm("This review of card #{cardId} was too soon?")
       removeCurrentCard()
-      server.tooSoon cardId, ->
+      serverService.tooSoon cardId, ->
         msg = "Saved: this review of #{cardId} was marked as too soon."
         statusPrinter.print(msg)
 
   $scope.tooLate = ->
     cardId = getCurrentCard().id
-    if confirm("This review of card #{cardId} was too late?")
+    if alertService.confirm("This review of card #{cardId} was too late?")
       removeCurrentCard()
-      server.tooLate cardId, ->
+      serverService.tooLate cardId, ->
         statusPrinter.print("Saved: this review for #{cardId} was marked as too late.")
 
   $scope.gotIt = ->
     cardId = $scope.currentCard.id
     removeCurrentCard()
-    server.gotIt cardId, ->
+    serverService.gotIt cardId, ->
       statusPrinter.print("Saved: reviewed card #{cardId}.")
 
   $scope.memorizedIt = ->
     cardId = $scope.currentCard.id
     removeCurrentCard()
-    server.memorizedIt cardId, ->
+    serverService.memorizedIt cardId, ->
       statusPrinter.print("Saved: memorized card #{cardId}.")
 
   $scope.edit = ->
-    $event.stopPropagation()
-    url = "/flashcards/" +$scope.currentCard.id + "/edit"
-    window.location.href = url
+    window.location.href = "/flashcards/#{$scope.currentCard.id}/edit"
 
   update = ->
     $scope.currentCard = $scope.cards[$scope.index]
@@ -120,11 +119,12 @@ cardReviewer = ($scope, server,$timeout,statusPrinter,cardService, math)->
 
 reviewerDependencies = [
   '$scope',
-  'server',
+  'serverService',
   '$timeout',
   'statusPrinter',
   'cardService',
-  'math',
+  'mathService',
+  'alertService'
   cardReviewer
 ]
 window.app.controller('cardReviewer',reviewerDependencies)
