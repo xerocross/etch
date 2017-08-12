@@ -18,10 +18,10 @@ class FlashcardsController < ApplicationController
     @totalNum = @flashcards.length
     
     if request.format.html?
-      @flashcards = @flashcards.paginate(page: params[:page], per_page: @perPage)
+      redirect_to flashcards_manager_manage_path
+      #@flashcards = @flashcards.paginate(page: params[:page], per_page: @perPage)
     elsif request.format.json?
       if !params[:no_paginate].present?
-        
         @flashcards = @flashcards.paginate(page: params[:page], per_page: @perPage)
       end
     end
@@ -81,34 +81,6 @@ class FlashcardsController < ApplicationController
     @flashcard.save!
   end
     
-  # GET /flashcards/new
-  
-  def new
-    @back = flashcards_manager_path
-    if params[:macro].present?
-      macros.any? do |m|
-        if m == params[:macro]
-          @macro = params[:macro]
-        else
-          puts "false"
-        end
-      end
-    end
-    session[:macro] = new_flashcard_path({macro: @macro.to_s})
-    @tip = @newFlashcardTip
-    init_new
-  end
-
-  def fill_in_the_blank
-    session[:macro] = fill_in_the_blank_flashcards_path
-    init_new
-  end
-  
-  def foreign_vocab
-    session[:macro] = foreign_vocab_flashcards_path
-    init_new
-  end
-  
   def create
     @flashcard = Flashcard.new(flashcard_params)
     @flashcard.user = @user
@@ -228,33 +200,8 @@ class FlashcardsController < ApplicationController
       @keywords = @user.keywords
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def flashcard_params
       params.require(:flashcard).permit(:front_side, :back_side, :date_repetition_due, :data, :macro)
-    end
-    
-    
-    def init_tips
-      @slap = ""
-      @@reviewTips = [1, 2]
-      index = 0
-      @reviewTip = Tip.find @@reviewTips[index]
-      @slap += "#{@user.tips.include? @reviewTip} : #{index} :  right #{index < @@reviewTips.length}  :length  #{@@reviewTips.length} condition: #{@user.tips.include? @reviewTip && index < @@reviewTips.length}"
-      while @user.tips.include?(@reviewTip) && index < @@reviewTips.length - 1 do
-        @slap += "a"
-        puts "index: #{index}"
-        index += 1
-        @reviewTip = Tip.find @@reviewTips[index]
-      end
-      
-      @@newFlashcardTips = [3]
-      index = 0
-      @newFlashcardTip = Tip.find @@newFlashcardTips[index]
-      while @user.tips.include?(@newFlashcardTip) && index < @@newFlashcardTips.length - 1 do
-        index += 1
-        @newFlashcardTip = Tip.find @@newFlashcardTips[index]
-      end
-      
     end
     
 end
