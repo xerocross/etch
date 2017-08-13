@@ -12,7 +12,7 @@ server = ($http, statusPrinter, cardService)->
     queryParameters = Object.getOwnPropertyNames(query);
 
     for param in queryParameters
-      if typeof(param) is 'string' and param.length > 0 and param is not '0'
+      if typeof(param) is 'string' and param.length > 0
         urlString += param + "=" + query[param] + "&"
       
     withCards = (cardsData)->
