@@ -59,7 +59,7 @@ server = ($http, statusPrinter, cardService)->
   @tooSoon = (cardId, callback)-> this.process(cardId, "too_soon", callback)
   @tooLate = (cardId, callback)-> this.process(cardId, "too_late", callback)
   
-  @memorizedIt = (cardId, callback)-> process(cardId, "got_it", callback)
+  @memorizedIt = (cardId, callback)-> this.process(cardId, "got_it", callback)
   return this
 window.app.service('server',['$http','statusPrinter','cardService', server]);
 window.app.service('serverService',['$http','statusPrinter','cardService', server]);
