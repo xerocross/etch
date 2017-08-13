@@ -37,18 +37,21 @@ cardReviewer = ($scope, serverService, $timeout, statusPrinter, cardService, mat
   $scope.isButtonVisible = -> $scope.buttonVisible[$scope.cardid]
 
   removeCurrentCard = ->
+    LEAD_NUMBER = 4
     $scope.currentCard.processed = true
-    if $scope.index < $scope.cards.length - 1
-      nextIndex = $scope.index
-      if !$scope.isMaxPage and $scope.index + 4 >= $scope.cards.length
-        $scope.addPage()
-    else if ($scope.index > 0)
+    nextIndex = $scope.index
+    # when we remove the existing card
+    # the index of the new current card
+    # is the same numeric index, $scope.index
+    # UNLESS the current card is the last
+    # available card
+
+    if $scope.isMaxPage and $scope.index == $scope.cards.length - 1
       nextIndex = $scope.index - 1
-    else
-      nextIndex = null
+    else if !$scope.isMaxPage and $scope.index + LEAD_NUMBER >= $scope.cards.length
+      $scope.addPage()
     $scope.cards.splice($scope.index, 1)
-    if nextIndex is not null
-      $scope.index = nextIndex
+    $scope.index = nextIndex
 
   $scope.deleteCard = ->
     cardId = $scope.currentCard.id
