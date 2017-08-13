@@ -34,7 +34,8 @@ class ApplicationController < ActionController::Base
    end
   
   def getFlashcards(params)
-    @flashcards = @user.flashcards
+    @flashcards = @user.flashcards.order(:id)
+    
     @flashcards = @flashcards.due.where.not(still_learning: true) if params[:review].present?
     @flashcards = @flashcards.still_learning if params[:memorize].present?
     if params[:key].present?
