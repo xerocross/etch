@@ -52,7 +52,7 @@ cardReviewer = ($scope, serverService, $timeout, statusPrinter, cardService, mat
 
   $scope.deleteCard = ->
     cardId = $scope.currentCard.id
-    if confirm("Delete card #{cardId}?")
+    if alertService.confirm("Delete card #{cardId}?")
       removeCurrentCard()
       serverService.deleteCard cardId, ->
         statusPrinter.print("Successfully deleted card #{cardId}.")
