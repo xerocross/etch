@@ -1,6 +1,6 @@
 %script
-  = "var CARD_DATA = \"#{@flashcard.data}\";".html_safe
-  =raw("var CARD = #{render partial: 'flashcard.json', locals:{flashcard: @flashcard}};");
+  =raw("CARD = #{@flashcard.to_json};")
+  =raw("CARD.keywords = #{@flashcard.keywords.to_json};")
 
 .pad
   -if @flashcard.errors.any?

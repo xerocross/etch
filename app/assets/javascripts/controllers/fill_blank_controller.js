@@ -1,5 +1,5 @@
 (function(){
-
+  //CARD.data is a global defined in the view
   var fillInTheBlank = function($scope, $timeout, crypt, math,fillBlankPresenter) {
     $scope.card = {
       macro:'fill_blank',
@@ -43,8 +43,8 @@
       updateData();
     });
     
-    if (typeof CARD_DATA == "string") {
-      var cardObj = crypt.decrypt(CARD_DATA); 
+    if (typeof CARD.data == "string") {
+      var cardObj = crypt.decrypt(CARD.data); 
 
       $scope.data = JSON.parse(cardObj).data;
       $scope.generator = $scope.data.generator;

@@ -1,15 +1,7 @@
-<script>
-  ATTACHED_KEYWORDS = <%= raw(flashcard.keywords.to_json) %>
-
-</script>
-
 <div ng-controller='keywordSelector'>
     <label>Keywords</label>
-    
-
     <tags-input ng-model="attachedKeywords" placeholder="add a keyword">
     <auto-complete source="loadItems($query)"></auto-complete>
     </tags-input>
-
     <input name = 'keyword_string' type="hidden" value='{{attachedKeywordsEncrypted | json}}'>
 </div>

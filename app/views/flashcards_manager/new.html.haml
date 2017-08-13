@@ -1,6 +1,7 @@
--if !@flashcard.data.nil?
-  %script
-    = "var CARD_DATA = \"#{@flashcard.data}\";".html_safe
+%script
+  =raw("CARD = #{@flashcard.to_json};")
+  =raw("CARD.keywords = #{@flashcard.keywords.to_json};")
+  
 .pad
   -if @flashcard.errors.any?
     .panel.panel-default

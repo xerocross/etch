@@ -48,8 +48,8 @@
         $scope.back_side = $scope.toWord;
       $timeout();
     }
-    if (typeof CARD_DATA == "string") {
-      var cardObj = crypt.decrypt(CARD_DATA); 
+    if (typeof CARD.data == "string") {
+      var cardObj = crypt.decrypt(CARD.data); 
 
       $scope.data = JSON.parse(cardObj).data;
       $scope.originWord = $scope.data.originWord;
