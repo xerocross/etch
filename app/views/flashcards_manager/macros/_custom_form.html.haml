@@ -1,1 +1,27 @@
-= render 'form', flashcard: @flashcard, working_keywords: @working_keywords
+%div{'ng-controller'=>"customCardForm"}
+  = form_for @flashcard, :html=>{'cal-crypt-form'=>true,class:'form-group'} do |f|
+    .row.flashcard-form-row
+      .col-sm-6
+        .field.form-div
+          = f.label :front_side,class:'sr-only'
+          = f.text_area :front_side,'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'front_side','ng-blur'=>'scanFront()',placeholder:'front side'
+      .col-sm-6
+        .preview-div.card-text.noselect{'ng-bind-html'=>'front_side'}
+
+    .row.flashcard-form-row.back
+      .col-sm-6
+        .field.form-div
+          = f.label :back_side,class:'sr-only'
+          = f.text_area :back_side,'class' =>'card-text form-control','cal-crypt-input'=>'true','ng-model'=>'back_side','ng-blur'=>'scanFront()',placeholder:'front side'
+      .col-sm-6
+        .preview-div.card-text.noselect{'ng-bind-html'=>'back_side'}
+
+    
+    .row.field.form-div
+      .col-sm-6
+        = render partial: 'keyword_selector',:locals => {:flashcard => @flashcard}
+
+
+    .row.actions.form-div
+      .col-sm-6
+        = submit_button f
